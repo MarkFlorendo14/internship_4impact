@@ -24,8 +24,10 @@ public class bankAccount3 {
 
     public void deposit(double amount) {
         double initialBalance = balance;
-        System.out.println("\n Hello, " + accountHolder + ", your initial balance is: " + balance);
-        System.out.println(" You have deposited: " + amount);
+        double newBalance = initialBalance + amount;
+        System.out.println("\n Hello, " + accountHolder + ", your INITIAL BALANCE is: " + initialBalance);
+        System.out.println("\n You have DEPOSITED: ---> " + amount);
+        System.out.println(" Your NEW BALANCE is: ---> " + newBalance);
         balance += amount;
     }
 
@@ -37,7 +39,7 @@ public class bankAccount3 {
         } else {
             double initialBalance = balance;
             System.out.println("\n    Hello " + accountHolder + ". \n    Your initial balance is: " + initialBalance);
-            System.out.println("    Withdrawal reason : " + " ' " + reason + " ' ");
+            System.out.println("    Withdrawal reason : " + " '" + reason + "' ");
             System.out.println("    You have withdrawn: " + amount);
             balance -= amount;
             System.out.print("    Your remaining balance is: " + balance + "\n");

@@ -5,6 +5,7 @@ public class Main {
 
         bankAccount3 acc1 = new bankAccount3("Mark Angelo Florendo", 1000);
 
-        acc1.withdraw(2000, "I want to buy pc peripherals");
+        acc1.deposit(50000.00);
+
     }
 }
