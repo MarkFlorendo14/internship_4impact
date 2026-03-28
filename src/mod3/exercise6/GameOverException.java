@@ -1,4 +1,4 @@
-package exercise6;
+package mod3.exercise6;
 
 public class GameOverException extends Exception {
     private int numberOftries;

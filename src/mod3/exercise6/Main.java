@@ -1,5 +1,4 @@
-package exercise6;
-import java.util.Scanner;
+package mod3.exercise6;
 
 public class Main {
     public static void main (String[] args) {

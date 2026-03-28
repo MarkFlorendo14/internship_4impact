@@ -1,7 +1,5 @@
 package exercise2;
 
-import exercise1.BankAccount1;
-
 public class Main {
     public static void main (String[] args) {
         bankAccount2 acc1 = new bankAccount2("Mark Angelo", 10000.00);

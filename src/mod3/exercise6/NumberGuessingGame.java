@@ -1,4 +1,5 @@
-package exercise6;
+package mod3.exercise6;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ public class NumberGuessingGame {
     int wrongGuesses = 0;
     Scanner scanner = new Scanner(System.in);
 
-    public void guessNumber() throws GameOverException{
+    public void guessNumber() throws GameOverException {
         while(wrongGuesses < 7) {
                 try {
                     System.out.println("Please enter a number: ");
