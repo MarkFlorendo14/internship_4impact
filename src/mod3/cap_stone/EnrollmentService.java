@@ -8,18 +8,18 @@ public class EnrollmentService {
     private ArrayList<Student> students = new ArrayList<>();
 
     public void enrollinCourse(int studentID, String courseCode) throws EnrollmentException {
-        // find the student from the list
+        //find the student from the list
         Student foundStudent = null;
         for (Student s : students) {
             if (s.getStudentID() == studentID) {
                 foundStudent = s;
-                break;
+
             }
         }
-        // find the course from the HashMap
+        //find the course from the HashMap
         Course foundCourse = courseRegistry.get(courseCode);
 
-        // check if they exist
+        //check if they exist
         if (foundStudent == null) {
             throw new EnrollmentException("Student not found!");
         }
@@ -27,12 +27,12 @@ public class EnrollmentService {
             throw new EnrollmentException("Course not found!");
         }
 
-        // check if course is full
+        //check if course is full
         if (foundCourse.getStudentList().size() >= foundCourse.getMaxCapacity()) {
             throw new EnrollmentException("Course is full!");
         }
 
-        // enroll
+        //enroll
         foundCourse.getStudentList().add(foundStudent);
         foundStudent.enroll(foundCourse);
     }
