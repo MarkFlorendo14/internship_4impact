@@ -1,5 +1,6 @@
     package com.fourimpact.taskManager.service;
 
+    import jakarta.transaction.TransactionScoped;
     import org.springframework.data.domain.Page;
     import org.springframework.data.domain.PageRequest;
     import org.springframework.data.domain.Sort;
@@ -66,6 +67,14 @@
             Task task = taskRepository.findById(id)
                     .orElseThrow (() -> new ResourceNotFoundException("Task", id));
             return toResponse(task);
+        }
+
+        @Transactional
+        public List<TaskResponse> getTaskByStatus(String status, Long id) {
+            return taskRepository.findByStatusAndUser(status, id)
+                    .stream()
+                    .map(this::toResponse)
+                    .collect(Collectors.toList());
         }
 
         // UPDATE

@@ -17,7 +17,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByTitleContainingIgnoreCase(String title);
     List<Task> findByPriorityOrderByCreatedAtDesc(String priority);
 
-    @Query("SELECT t from Task t JOIN FETCH t.user JOIN FETCH t.category")
+    @Query("SELECT t from Task t LEFT JOIN FETCH t.user LEFT JOIN FETCH t.category")
     List<Task> findAllWithUserAndCategory();
 
     @Query(value      = "SELECT t FROM Task t WHERE t.user.id = :userId",
