@@ -93,8 +93,9 @@
         public void deleteTask(Long id) {
             if (!taskRepository.existsById(id)) {
                 throw new ResourceNotFoundException("Task", id);
+            } else {
+                taskRepository.deleteById(id);
             }
-            taskRepository.deleteById(id);
         }
 
         // ── ASSIGN TAG ─────────────────────────────────────────────────────────

@@ -2,12 +2,11 @@ package com.fourimpact.taskManager.service;
 
 import com.fourimpact.taskManager.dto.CategoryResponse;
 import com.fourimpact.taskManager.dto.CreateCategoryRequest;
-import com.fourimpact.taskManager.dto.CreateTaskRequest;
 import com.fourimpact.taskManager.entity.Category;
 import com.fourimpact.taskManager.exception.ResourceNotFoundException;
 import com.fourimpact.taskManager.repository.CategoryRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,11 +20,7 @@ public class CategoryService {
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-    @Transactional
-    public List<CategoryResponse> getAllCategories() {
-        return categoryRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
-    }
-
+    //Create
     @Transactional
     public CategoryResponse createCategory(CreateCategoryRequest createCategoryRequest) {
         Category category = new Category();
@@ -34,7 +29,19 @@ public class CategoryService {
         Category newCategory = categoryRepository.save(category);
         return toResponse(newCategory);
     }
+    //Read
+    @Transactional
+    public List<CategoryResponse> getAllCategories() {
+        return categoryRepository.findAll().stream().map(this::toResponse).collect(Collectors.toList());
+    }
 
+    @Transactional(readOnly = true)
+    public CategoryResponse getCategoryById(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", id));
+        return toResponse(category);
+    }
+
+    //Update
     @Transactional
     public CategoryResponse updateCategory(Long id, CreateCategoryRequest request) {
         Category category = categoryRepository.findById(id)
@@ -44,7 +51,14 @@ public class CategoryService {
         Category updatedCategory = categoryRepository.save(category);
         return toResponse(updatedCategory);
     }
-
+    @Transactional
+    public void deleteCategory(Long id) {
+        if (!categoryRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Category", id);
+        } else {
+        categoryRepository.deleteById(id);
+        }
+    }
     public CategoryResponse toResponse(Category category) {
         return new CategoryResponse(
                 category.getId(),
