@@ -2,24 +2,24 @@ package com.fourimpact.taskManager.dto;
 
 public class TagResponse {
     private Long Id;
-    private String Name;
+    private String name;
 
-    public TagResponse(Long Id, String tagName) {
+    public TagResponse(Long Id, String name) {
         this.Id = Id;
-        this.Name = Name;
+        this.name = name;
     }
 
-    public Long getTagId() {
+    public Long getId() {
         return Id;
     }
-    public void setTagId(Long Id) {
+    public void setId(Long Id) {
         this.Id = Id;
     }
-    public String getTagName() {
-        return Name;
+    public String getName() {
+        return name;
     }
-    public void setTagName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

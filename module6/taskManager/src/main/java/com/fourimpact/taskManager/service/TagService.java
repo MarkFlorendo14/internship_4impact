@@ -21,7 +21,7 @@ public class TagService {
     @Transactional
     public TagResponse createTag(CreateTagRequest createTagRequest) {
         Tag tag = new Tag();
-        tag.setName(createTagRequest.getTagName());
+        tag.setName(createTagRequest.getName());
         tagRepository.save(tag);
         return toResponse(tag);
     }
@@ -42,7 +42,7 @@ public class TagService {
     public TagResponse updateTag(Long id, CreateTagRequest createTagRequest) {
         Tag tags = tagRepository.findById(id)
                 .orElseThrow (() -> new ResourceNotFoundException("Tag", id));
-        tags.setName(createTagRequest.getTagName());
+        tags.setName(createTagRequest.getName());
         tagRepository.save(tags);
         return toResponse(tags);
     }
