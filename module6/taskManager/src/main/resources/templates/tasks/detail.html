@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th>Title</title>
+</head>
+<body>
+<header th:insert="~{fragments/nav :: navbar}"></header>
+
+<main class="task_details">
+    <h1> TASK DETAILS </h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <td th:text="${task.title}"></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td th:text="${task.description}"></td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td th:text="${task.status}"></td>
+        </tr>
+        <tr>
+            <th>Priority</th>
+            <td th:text="${task.priority}"></td>
+        </tr>
+        <tr>
+            <th>Assigned User</th>
+            <td th:text="${task.assignedUsername}"></td>
+        </tr>
+        <tr>
+            <th>Created At</th>
+            <td th:text="${task.createdAt}"></td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>
