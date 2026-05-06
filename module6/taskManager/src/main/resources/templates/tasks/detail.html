@@ -2,39 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th>Title</title>
+    <title th:text="${pageTitle}">Task Details</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <script th:inline="javascript">
+            const taskId   = [[${task.id}]];
+            const taskDone = [[${task.done}]];
+            const baseUrl  = [[@{/}]];
+    </script>
 </head>
-<body>
-<header th:insert="~{fragments/nav :: navbar}"></header>
 
-<main class="task_details">
-    <h1> TASK DETAILS </h1>
-    <table>
-        <tr>
-            <th>Title</th>
-            <td th:text="${task.title}"></td>
-        </tr>
-        <tr>
-            <th>Description</th>
-            <td th:text="${task.description}"></td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td th:text="${task.status}"></td>
-        </tr>
-        <tr>
-            <th>Priority</th>
-            <td th:text="${task.priority}"></td>
-        </tr>
-        <tr>
-            <th>Assigned User</th>
-            <td th:text="${task.assignedUsername}"></td>
-        </tr>
-        <tr>
-            <th>Created At</th>
-            <td th:text="${task.createdAt}"></td>
-        </tr>
-    </table>
+<body>
+<header th:replace="~{fragments/nav :: navbar}"></header>
+<main class="container">
+    <div class="task-detail">
+        <div class="task-card">
+            <p><strong>Title:</strong> <span th:text="${task.title}">Title</span></p>
+            <p><strong>Assigned User:</strong> <span th:text="${task.assignedUsername}">Assigned User</span></p>
+            <p><strong>Description:</strong> <span th:text="${task.description}">Description</span></p>
+            <p><strong>Priority:</strong> <span th:text="${task.priority}">Priority</span></p>
+            <p><strong>Status:</strong> <span th:text="${task.status}">Status</span></p>
+            <p><strong>ID:</strong> <span th:text="${task.id}">ID</span></p>
+            <div class="task-actions">
+                <a class="btn btn-secondary" th:href="@{/tasks}">Back</a>
+                <a class="btn btn-primary" th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a>
+                <button class="btn btn-complete"
+                        th:unless="${task.status.name() == 'COMPLETED'}"
+                        th:attr="data-task-id=${task.id}">
+                    Mark Complete
+                </button>
+            </div>
+        </div>
+    </div>
 </main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

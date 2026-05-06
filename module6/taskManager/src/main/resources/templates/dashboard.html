@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{task.label.title}">Task Manager</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+
+</head>
+<body>
+<header th:insert="~{fragments/nav :: navbar}"></header>
+<main class="container">
+    <h1>Dashboard</h1>
+    <div class="task-grid">
+        <div class="task-card">
+            <h3>To-Do</h3>
+            <p th:text="${todoCount}">0</p>
+        </div>
+        <div class="task-card">
+            <h3>Ongoing</h3>
+            <p th:text="${ongoingCount}">0</p>
+        </div>
+        <div class="task-card">
+            <h3>Completed</h3>
+            <p th:text="${completedCount}">0</p>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

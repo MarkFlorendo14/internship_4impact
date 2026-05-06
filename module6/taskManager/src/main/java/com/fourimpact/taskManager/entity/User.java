@@ -1,5 +1,7 @@
 package com.fourimpact.taskManager.entity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Username is required")
     @Column(name = "Username", nullable = false, length = 40)
     private String username;
 
@@ -34,7 +37,7 @@ public class User {
 
     //Constructor - no args
     public User() {}
-    public User(String Username, String email, String firstName, String lastName, String role) {
+    public User(String username, String email, String firstName, String lastName, String role) {
         this.username = username;
         this.email = email;
         this.firstName = firstName;

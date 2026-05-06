@@ -2,24 +2,26 @@ package com.fourimpact.taskManager.dto;
 
 public class UserResponse {
     private Long id;
-    private String Username;
+    private String username;
     private String email;
     private String firstName;
     private String lastName;
     private String role;
 
-    public UserResponse(Long id, String Username, String email,
+    public UserResponse(Long id, String username, String email,
                              String firstName, String lastName, String role) {
         this.id = id;
-        this.Username = Username;
+        this.username = username;
         this.email = email;
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public String getUsername() { return Username; }
-    public void setUsername(String Username) { this.Username = Username; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getUsername() { return username; }
+    public void setUsername(String Username) { this.username = Username; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getFirstName() { return firstName; }

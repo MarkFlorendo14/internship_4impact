@@ -1,5 +1,6 @@
 package com.fourimpact.taskManager.repository;
 
+import com.fourimpact.taskManager.entity.Status;
 import com.fourimpact.taskManager.entity.Task;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,13 +12,13 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    List<Task> findByStatus(String status);
+    List<Task> findByStatus(Status status);
     List<Task> findByUserId(Long userId);
-    List<Task> findByStatusAndUserId(String status, Long userId);
+    List<Task> findByStatusAndUserId(Status status, Long userId);
     List<Task> findByTitleContainingIgnoreCase(String title);
     List<Task> findByPriorityOrderByCreatedAtDesc(String priority);
 
-    @Query("SELECT t from Task t JOIN FETCH t.user LEFT JOIN FETCH t.category")
+    @Query("SELECT t from Task t LEFT JOIN FETCH t.user LEFT JOIN FETCH t.category")
     List<Task> findAllWithUserAndCategory();
 
     @Query(value      = "SELECT t FROM Task t WHERE t.user.id = :userId",
@@ -25,9 +26,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Page<Task> findByUserIdPaginated(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT t FROM Task t WHERE t.status = :status AND t.user.id = :userId")
-    List<Task> findByStatusAndUser(@Param("status") String status,
+    List<Task> findByStatusAndUser(@Param("status") Status status,
                                    @Param("userId") Long userId);
 
-    long countByStatus(String status);
+    long countByStatus(Status status);
 }
 

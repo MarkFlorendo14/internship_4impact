@@ -1,18 +1,15 @@
     package com.fourimpact.taskManager.service;
 
+    import com.fourimpact.taskManager.entity.*;
     import org.springframework.data.domain.Page;
     import org.springframework.data.domain.PageRequest;
     import org.springframework.data.domain.Sort;
     import com.fourimpact.taskManager.dto.CreateTaskRequest;
-    import com.fourimpact.taskManager.entity.Task;
     import com.fourimpact.taskManager.repository.TaskRepository;
     import com.fourimpact.taskManager.repository.UserRepository;
     import com.fourimpact.taskManager.repository.CategoryRepository;
     import com.fourimpact.taskManager.repository.TagRepository;
     import com.fourimpact.taskManager.dto.TaskResponse;
-    import com.fourimpact.taskManager.entity.Category;
-    import com.fourimpact.taskManager.entity.Tag;
-    import com.fourimpact.taskManager.entity.User;
     import com.fourimpact.taskManager.exception.ResourceNotFoundException;
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
@@ -44,11 +41,9 @@
             User user = userRepository.findById(request.getUserId())
                     .orElseThrow(() -> new ResourceNotFoundException("User", request.getUserId()));
 
-            Category category = null;
-            if (request.getCategoryId() != null) {
-                category = categoryRepository.findById(request.getCategoryId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Category", request.getCategoryId()));
-            }
+            Category category = categoryRepository.findById(request.getCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category", request.getCategoryId()));
+
 
             Task task =  new Task(request.getTitle(), request.getDescription(),
                     request.getStatus(), request.getPriority());
@@ -72,7 +67,13 @@
             return toResponse(task);
         }
 
-        public long countByStatus(String status) {
+        @Transactional(readOnly = true)
+        public Task getTaskEntityById(Long id) {
+            return taskRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Task", id));
+        }
+
+        public long countByStatus(Status status) {
            return taskRepository.countByStatus(status);
         }
 
@@ -134,7 +135,14 @@
                     .map(this::toResponse);  // converts each Task entity to a TaskResponse DTO
         }
 
-        public void saveTask(Task task) {
+        public void save(Task task) {
+            taskRepository.save(task);
+        }
+
+        public void markCompleteTask(Long taskId) {
+            Task task = taskRepository.findById(taskId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Task", taskId));
+            task.setStatus(Status.COMPLETED);
             taskRepository.save(task);
         }
 

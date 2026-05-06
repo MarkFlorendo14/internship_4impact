@@ -1,0 +1,316 @@
+.input-error{
+    border:2px solid red;
+}
+.error-text {
+    color: red;
+    font-size: 10px;
+}
+
+:root {
+    /* Colour palette */
+    --color-primary:    #1F497D;
+    --color-secondary:  #4A90D9;
+    --color-accent:     #E8F5E9;
+    --color-danger:     #E53935;
+    --color-warning:    #FB8C00;
+    --color-text:       #212121;
+    --color-muted:      #757575;
+    --color-bg:         #F5F5F5;
+    --color-white:      #FFFFFF;
+
+    /* Spacing scale */
+    --space-xs:   0.25rem;
+    --space-sm:   0.5rem;
+    --space-md:   1rem;
+    --space-lg:   1.5rem;
+    --space-xl:   2rem;
+
+    /* Typography */
+    --font-body:  'Segoe UI', system-ui, sans-serif;
+    --font-code:  'Cascadia Code', 'Consolas', monospace;
+    --font-size-base: 1rem;
+    --border-radius: 6px;
+
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    line-height: 1.6;
+}
+
+main.container{
+    flex: 1;
+    padding: var(--space-xl);
+}
+
+/* ── Navbar using Flexbox ─────────────────────────── */
+.nav-container {
+    display: flex;
+    justify-content: space-between;  /* brand left, links right */
+    align-items: center;             /* vertically centred */
+    padding: var(--space-md) var(--space-xl);
+    background-color: #00476b;
+    color: var(--color-white);
+}
+
+.nav-links {
+    display: flex;
+    gap: var(--space-md);
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: var(--color-secondary);
+}
+
+.nav-brand{
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* ── Task card grid ──────────────────────────────── */
+.task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+}
+
+.task-card {
+    background: var(--color-white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: var(--space-lg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.task-card.done {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.task-detail {
+    background: var(--color-white);
+    padding: var(--space-xl);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    max-width: 600px;
+    margin: var(--space-xl) auto;
+}
+
+/* ── Mobile-first base ──────────────────────────── */
+.container {
+    width: 100%;
+    padding: 0 var(--space-md);
+}
+
+/* ── Tablet (≥ 768px) ───────────────────────────── */
+@media (min-width: 768px) {
+    .container {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+    /* Stack nav links horizontally on tablet+ */
+    .nav-links {
+        flex-direction: row;
+    }
+}
+/* ── Desktop (≥ 1200px) ─────────────────────────── */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
+/* ── Mobile: hide nav links, show menu button ───── */
+@media (max-width: 767px) {
+    .nav-links {
+        display: none;          /* toggled by JavaScript */
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        color: var(--color-white);
+    }
+}
+@media (min-width: 768px) {
+    .menu-toggle { display: none; }
+}
+
+/* ── Form styles ─────────────────────────────────── */
+
+.task-form {
+    background: var(--color-white);
+    padding: var(--space-xl);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    max-width: 600px;
+    margin: var(--space-xl) auto;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+    font-family: var(--font-body);
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(74,144,217,0.15);
+}
+
+/* Error state */
+.input-error {
+    border-color: var(--color-danger) !important;
+}
+
+.error-text {
+    color: var(--color-danger);
+    font-size: 0.875rem;
+}
+
+/* ── Buttons ─────────────────────────────────────── */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 15px;
+    font-size: 14px;
+    border-radius: 10px;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+
+    /* ADD THESE LINES */
+    border-style: solid;
+    border-width: 1px; /* Default width */
+    border-color: transparent; /* Default to invisible until specific class overrides it */
+
+    transition: background-color 0.2s, transform 0.1s, border-color 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-edit {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: darkslateblue; /* Now this will show */
+    border-width: 4px;
+}
+
+.btn-edit:hover {
+    background-color: var(--color-secondary);
+}
+
+.btn-view {
+    background-color: #e0e0e0;
+    color: var(--color-text);
+    border-color: #cac6ff; /* Add a border color here if you want it to show */
+}
+.btn-view:hover {
+    background-color: #bdbdbd;
+}
+
+.btn-danger {
+    background-color: red;
+    color: white;
+}
+
+.btn-complete {
+    background-color: var(--color-accent);
+    color: var(--color-text);
+    border-color: springgreen;
+    border-width: 4px;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 200px;
+    margin-top: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+}
+
+.error-box {
+    color: var(--color-danger);
+    margin-top: var(--space-md);
+}
+
+.footer {
+    padding: var(--space-lg);
+    text-align: center;
+    color: var(--color-muted);
+}
+
+[data-theme='dark'] {
+    --color-bg: #121212;
+    --color-white: #1E1E1E;
+    --color-text: #E0E0E0;
+    --color-muted: #BDBDBD;
+}

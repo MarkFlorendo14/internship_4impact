@@ -56,6 +56,11 @@ public class UserService {
         }
     }
 
+    //Save
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
     private UserResponse toResponse(User user) {
        return new UserResponse(
                user.getId(),

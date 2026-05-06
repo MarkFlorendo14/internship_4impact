@@ -59,6 +59,11 @@ public class CategoryService {
         categoryRepository.deleteById(id);
         }
     }
+
+    public void save(Category category) {
+        categoryRepository.save(category);
+    }
+
     public CategoryResponse toResponse(Category category) {
         return new CategoryResponse(
                 category.getId(),

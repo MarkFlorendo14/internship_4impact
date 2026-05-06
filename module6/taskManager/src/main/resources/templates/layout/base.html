@@ -1,17 +1,21 @@
+<!-- src/main/resources/templates/layout/base.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title layout:title-pattern="CONTENT_TITLE - TaskManager">TaskManager</title>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} + ' | TaskManager'">TaskManager</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
-<body>
-<header th:replace="~{fragments/nav :: navbar}"></header>
 
-<main>
-    <div layout:fragment="content"></div>
-</main>
-<footer>
-    <p>&copy; 2026 Mark Angelo Florendo</p>
-</footer>
+<body>
+    <header th:replace="~{fragments/nav :: navbar}"></header>
+
+        <main class="container">
+            <!-- Each page inserts its content here via th:replace -->
+            <div th:fragment="content">Page content goes here</div>
+        </main>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <script th:src="@{/js/main.js}" defer></script>
 </body>
 </html>

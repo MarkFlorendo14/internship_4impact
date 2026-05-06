@@ -1,6 +1,7 @@
 package com.fourimpact.taskManager.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,13 +14,22 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Title is required")
+    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     @Column(name = "title", nullable = false, length = 100)
     private String title;
+
+    @Size(max = 500, message = "Description cannot exceed 500 characters")
     @Column(name = "description", columnDefinition = "NVARCHAR (MAX)")
     private String description;
-    @Column(name = "status",  length = 50)
-    private String status;
 
+    @NotNull(message = "Status is required")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status",  length = 50)
+    private Status status;
+
+    @NotNull(message = "Priority is required")
     @Enumerated(EnumType.STRING)
     @Column(name = "priority", length = 100)
     private Priority priority;
@@ -57,20 +67,24 @@ public class Task {
 
     //No-arg constructor JPA required
     public Task(){ }
-        public Task (String title,String description, String status, Priority priority){
+        public Task (String title,String description, Status status, Priority priority){
         this.title = title;
         this.description = description;
         this.status = status;
         this.priority = priority;
         }
 
-    public Long getId()                  { return id; }
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id)           { this.id = id; }
     public String getTitle()             { return title; }
     public void setTitle(String t)       { this.title = t; }
     public String getDescription()       { return description; }
     public void setDescription(String d) { this.description = d; }
-    public String getStatus()            { return status; }
-    public void setStatus(String s)      { this.status = s; }
+    public Status getStatus()            { return status; }
+    public void setStatus(Status s)      { this.status = s; }
     public Priority getPriority()          { return priority; }
     public void setPriority(Priority priority)    { this.priority = priority; }
     public LocalDateTime getCreatedAt()  { return createdAt; }

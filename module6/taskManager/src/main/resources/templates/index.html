@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/base}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Task Manager</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
+
 <body>
-<div layout:fragment="content">
-    <h1> THIS IS MY HOMEPAGE</h1>
-</div>
+<header th:replace="~{fragments/nav :: navbar}"></header>
+
+<main class="container">
+    <h1 th:text="${message}">Default heading</h1>
+</main>
+
 </body>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script th:src="@{/js/main.js}"></script>
 </html>

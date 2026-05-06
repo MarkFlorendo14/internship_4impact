@@ -2,30 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${pageTitle}"> Title</title>
+    <title th:text="${pageTitle}">All Tasks</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
 </head>
-<body>
-    <h1 th:text="${pageTitle}"> All Tasks </h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="task : ${tasks}">
-                <td th:text="${task.title}"> Title </td>
-                <td th:text="${task.status}"> Status </td>
-                <td th:text="${task.priority}"> Priority </td>
-                <td>
-                    <a th:href="@{/tasks/detail/{id}(id=${task.id})}">View</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
+<body>
+<header th:replace="~{fragments/nav :: navbar}"></header>
+
+<main class="container">
+    <h1 th:text="${pageTitle}">All Tasks</h1>
+    <input id="task-search" type="text" placeholder="Search tasks by title" class="search-input">
+
+    <div class="task-grid">
+            <div th:each="tasks : ${task}" class="task-card" th:classappend="${tasks.status.name() == 'COMPLETED'} ? ' done' : ''">
+
+                <h3 class="task-title" th:text="${tasks.title}">Task Title</h3>
+                <p><strong>Status:</strong> <span th:text="${tasks.status}">Status</span></p>
+                <p><strong>Priority:</strong> <span th:text="${tasks.priority}">Priority</span></p>
+                <p><strong>Owner:</strong> <span th:text="${tasks.assignedUsername}">User</span></p>
+
+                <div class="task-actions">
+                    <a class="btn btn-view" th:href="@{/tasks/{id}(id=${tasks.id})}">View</a>
+                    <a class="btn btn-edit" th:href="@{/tasks/{id}/edit(id=${tasks.id})}">Edit</a>
+
+                    <button class="btn btn-complete"
+                            th:attr="data-task-id=${tasks.id}"
+                            th:unless="${tasks.status.name() == 'COMPLETED'}">
+                        Mark Complete
+                    </button>
+
+                    <form th:action="@{/tasks/{id}/del(id=${tasks.id})}" method="post">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this task?');">Delete</button>
+                    </form>
+                </div>
+
+            </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
+<script th:src="@{/js/main.js}"></script>
 </html>
