@@ -35,6 +35,24 @@ public class TaskWebController {
         return "tasks/list";
     }
 
+    @GetMapping("/{id}")
+    public String viewTask(@PathVariable Long id, Model model) {
+        model.addAttribute("pageTitle", "View Task");
+        model.addAttribute("task", taskService.getTaskById(id));
+        return "tasks/detail";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editTaskForm(@PathVariable Long id, Model model) {
+        model.addAttribute("pageTitle", "Edit Task");
+        model.addAttribute("task", taskService.getTaskEntityById(id));
+        model.addAttribute("status", Status.values());
+        model.addAttribute("priority", Priority.values());
+        return "tasks/form";
+    }
+
+
+
     @GetMapping("/new")
     public String newTaskForm(Model model) {
         model.addAttribute("categories", CategoryService.getAllCategories());
@@ -65,7 +83,7 @@ public class TaskWebController {
         return "redirect:/tasks";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/edit")
     public String updateTask(@PathVariable Long id,
                              @Valid @ModelAttribute Task task,
                              @RequestParam(required = false) String newCategoryName,
@@ -89,7 +107,6 @@ public class TaskWebController {
         }
 
         task.setId(id);
-        userService.saveUser(task.getUser());
         taskService.save(task);
         return "redirect:/tasks";
     }
@@ -105,6 +122,12 @@ public class TaskWebController {
     public ResponseEntity<Void> markComplete(@PathVariable Long id) {
         taskService.markCompleteTask(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/greeting")
+    @ResponseBody
+    public String greeting() {
+        return "Hello, " + System.getenv().getOrDefault("MY_GREETING", "world") + "!";
     }
 
 }

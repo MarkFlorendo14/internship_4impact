@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <title th:text="${pageTitle}">Task Details</title>
     <link th:href="@{/css/main.css}" rel="stylesheet">
-    <script th:inline="javascript">
-            const taskId   = [[${task.id}]];
-            const taskDone = [[${task.done}]];
-            const baseUrl  = [[@{/}]];
-    </script>
 </head>
 
 <body>
@@ -26,8 +21,8 @@
                 <a class="btn btn-secondary" th:href="@{/tasks}">Back</a>
                 <a class="btn btn-primary" th:href="@{/tasks/{id}/edit(id=${task.id})}">Edit</a>
                 <button class="btn btn-complete"
-                        th:unless="${task.status.name() == 'COMPLETED'}"
-                        th:attr="data-task-id=${task.id}">
+                        th:attr="data-task-id=${task.id}"
+                        th:unless="${task.status.name() == 'COMPLETED'}">
                     Mark Complete
                 </button>
             </div>
@@ -36,4 +31,5 @@
 </main>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
+<script th:src="@{/js/main.js}"></script>
 </html>
